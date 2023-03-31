@@ -50,6 +50,21 @@ function SecondaryListItems() {
                 </ListItemButton>
                 </NavLink>
 
+                <NavLink
+            to="/album"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? "active" : ""
+            }
+            style={{ textDecoration: 'none', color:'black' }}
+        >
+            <ListItemButton>
+                    <ListItemIcon>
+                    <i class="fa-solid fa-books"></i>
+                    </ListItemIcon>
+                    <ListItemText primary="Album" />
+                </ListItemButton>
+                </NavLink>
+
                 <ListItemButton>
                     <ListItemIcon>
                         <LogoutIcon/>

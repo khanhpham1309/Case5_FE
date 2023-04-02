@@ -23,6 +23,7 @@ import {useSelector} from "react-redux";
 import SecondaryListItems from "./SecondaryListItems";
 import {Menu, MenuItem} from "@mui/material";
 import {AccountCircle} from "@mui/icons-material";
+import PlayBar from '../playbar';
 
 
 const drawerWidth = 240;
@@ -216,5 +217,11 @@ function LayoutContent() {
 }
 
 export default function Layout() {
-    return <LayoutContent />;
+    return (
+        <>
+        <LayoutContent />;
+        <PlayBar/>
+        </>
+    )
+
 }

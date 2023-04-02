@@ -1,60 +1,99 @@
-import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import swal from "sweetalert";
-import {Field, Form, Formik} from "formik";
-import {register} from "../../service/userService";
+import React, { useState } from "react";
+import axios from "axios";
 
-export default function Register() {
+import "./register.css";
+import SearchIcon from "../../assets/icons/SearchIcon";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import customAxios from "../../service/api";
+const INIT_ERROR_MESSAGE = {
+  name: "",
+  pwd: "",
+};
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector(state => {
-        return state.user.user
-    })
-    const handleRegister = (value) => {
-        dispatch(register(value)).then((state) => {
-            if (state.payload.data !== user.username) {
-                console.log(state.payload.data)
-                swal("Đăng ký thành công!", {
-                    icon: "success",
-                }).then(() => {
-                    return navigate('/')
-                });
+const Register = () => {
+  const [name, setName] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [err, setErr] = useState(INIT_ERROR_MESSAGE);
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
-            } else {
-                swal("Tài khoản đã tồn tại!", {
-                }).then(() => {
-                    return navigate('/register')
-                });
+  const navigate = useNavigate()
 
-            }
-        })
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+    setErr({ ...err, name: "" });
+  };
+
+  const handleChangePwd = (e) => {
+    setPwd(e.target.value);
+    setErr({ ...err, pwd: "" });
+  };
+
+  const onHandleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (name === "") {
+      return setErr({ ...err, name: "This field is required" });
     }
-    return (
-        <div className={'row'}>
+    if (pwd === "") {
+      return setErr({ ...err, pwd: "This field is required" });
+    }
 
-            <div className="offset-3 col-6 mt-5">
-                <h1 style={{textAlign: 'center'}}>Register</h1>
-                <Formik initialValues={{username: '', password: ''}} onSubmit={(values) => {
+    try {
+      const res = await customAxios.post("/users/register", {
+        username: name,
+        password: pwd,
+        avatar: 'test',
+        nameUser: 'thang'
+      });
+      console.log(res)
+    } catch (err) {
+      console.log(err);
+    }
 
-                    handleRegister(values)
-                }}>
-                    <Form>
-                        <div className="ml-3 form-group">
-                            <label htmlFor="exampleInputUsername">User Name: </label>
-                            <Field type='text' className={'form-control'}/>
-                        </div>
-                        <div className="ml-3 form-group">
-                            <label htmlFor="exampleInputPassword">Password: </label>
-                            <Field type='text' className={'form-control'}/>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Register</button>
-                        <button type="submit" className="btn btn-primary" style={{marginLeft: 10}}>
-                            <Link to={'/'} style={{textDecoration: 'none', color: 'red'}}>Login</Link>
-                        </button>
-                    </Form>
-                </Formik>
-            </div>
+    // customAxios
+
+    // navigate('/login')
+  };
+
+  return (
+    <div className="login-container">
+      <h1>Register</h1>
+      <form onSubmit={onHandleSubmit}>
+        <div className="pwd">
+        <input
+          onChange={handleChangeName}
+          type="text"
+          placeholder="user name"
+        />
         </div>
-    )
-}
+   
+        {err.name ? (
+          <p style={{ fontSize: "12px", color: "red" }}>{err.name}</p>
+        ) : null}
+
+        <div className="pwd">
+          <input
+            onChange={handleChangePwd}
+            type={isShowPassword ? "text" : "password"}
+            placeholder="password"
+          />
+          <div className="icon"
+          onClick={() => setIsShowPassword(!isShowPassword)}
+          >
+            <SearchIcon />
+          </div>
+        </div>
+        {err.pwd ? (
+          <p style={{ fontSize: "12px", color: "red" }}>{err.pwd}</p>
+        ) : null}
+        <button type="submit">Submit</button>
+        <Link to="/login">
+            Already have an account ? Go to login
+        </Link>
+      </form>
+    </div>
+  );
+};
+
+export default Register;

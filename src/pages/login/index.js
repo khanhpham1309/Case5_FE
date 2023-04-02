@@ -1,55 +1,104 @@
-import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {Field, Form, Formik} from "formik";
-import swal from "sweetalert";
+import React, { useState } from "react";
+import axios from "axios";
 
-import {login} from "../../service/userService";
+import "./login.css";
+import SearchIcon from "../../assets/icons/SearchIcon";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+const INIT_ERROR_MESSAGE = {
+  name: "",
+  pwd: "",
+};
 
-export default function Login() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_REACT_BASE_API,
+  headers: {
+    // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    ContentType: "application/json",
+    Accept: "application/json",
+    CacheControl: "no-cache"
+  },
+});
 
-    const handleLogin = (value)=>{
-        dispatch(login(value)).then((state)=>{
-            if (state.payload.data !== "Sai tên đăng nhâp" && state.payload.data !== "Sai mật khẩu"){
-                swal("Đăng nhập thành công!", {
-                    icon: "success",
-                }).then(()=>{return  navigate('/home')});
+const Login = () => {
+  const [name, setName] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [err, setErr] = useState(INIT_ERROR_MESSAGE);
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
-            }else {
-                swal("Sai mật khẩu hoặc tài khoản!", {
-                }).then(() => {
-                    return navigate('/login')
-                });
-            }
-        })
+  const navigate = useNavigate()
+
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+    setErr({ ...err, name: "" });
+  };
+
+  const handleChangePwd = (e) => {
+    setPwd(e.target.value);
+    setErr({ ...err, pwd: "" });
+  };
+
+  const onHandleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (name === "") {
+      return setErr({ ...err, name: "This field is required" });
     }
-    return (
-        <div className={'row'}>
+    if (pwd === "") {
+      return setErr({ ...err, pwd: "This field is required" });
+    }
 
-            <div className="offset-3 col-6 mt-5">
-                <h1 style={{textAlign: 'center'}}>Login</h1>
-                <Formik
-                    initialValues={{username: '', password: ''}}
-                    onSubmit={(values)=>{handleLogin(values)}}
-                >
-                    <Form>
-                        <div className="ml-3 form-group">
-                            <label htmlFor="exampleInputUsername">User Name: </label>
-                            <Field type='text' className={'form-control'} name={'username'}/>
-                        </div>
-                        <div className="ml-3 form-group">
-                            <label htmlFor="exampleInputPassword">Password: </label>
-                            <Field type='text' className={'form-control'} name={'password'}/>
-                        </div>
+    // try {
+    //   const res = await instance.post("/users/login", {
+    //     name: name,
+    //     password: pwd,
+    //   });
+    //   console.log(res)
+    // } catch (err) {
+    //   console.log(err);
+    // }
 
-                        <button type="submit" className="btn btn-primary">Login</button>
-                        <button type="submit" className="btn btn-primary" style={{marginLeft: 10}}>
-                            <Link to={'/register'} style={{textDecoration:'none', color:'red'}}>Register</Link>
-                        </button>
-                    </Form>
-                </Formik>
-            </div>
+    navigate('/home')
+  };
+
+  return (
+    <div className="login-container">
+      <h1>Login</h1>
+      <form onSubmit={onHandleSubmit}>
+        <div className="pwd">
+        <input
+          onChange={handleChangeName}
+          type="text"
+          placeholder="user name"
+        />
         </div>
-    )
-}
+   
+        {err.name ? (
+          <p style={{ fontSize: "12px", color: "red" }}>{err.name}</p>
+        ) : null}
+
+        <div className="pwd">
+          <input
+            onChange={handleChangePwd}
+            type={isShowPassword ? "text" : "password"}
+            placeholder="password"
+          />
+          <div className="icon"
+          onClick={() => setIsShowPassword(!isShowPassword)}
+          >
+            <SearchIcon />
+          </div>
+        </div>
+        {err.pwd ? (
+          <p style={{ fontSize: "12px", color: "red" }}>{err.pwd}</p>
+        ) : null}
+        <button type="submit">Submit</button>
+        <Link to="/register">
+            Dont have account yet? Go to register
+        </Link>
+      </form>
+    </div>
+  );
+};
+
+export default Login;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AlbumItem from "./AlbumItem";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import {getAll,createAlbum,editAlbum,removeAlbum} from "../../services/albumService";
 
 export default function Album() {
   const [album, setAlbum] = useState([]);

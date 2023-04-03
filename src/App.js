@@ -15,7 +15,6 @@ function App() {
 
     const auth = useSelector(state => state.auth)
 
-  
 
   return (
     <>

@@ -28,7 +28,7 @@ export default function MultiActionAreaCard({ item }) {
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          <Link to={`/album/${item.idAlbum}`}>More Detail</Link>
+          <Link to={`/album/${item.idAlbum}`}>Detail</Link>
         </Button>
       </CardActions>
     </Card>

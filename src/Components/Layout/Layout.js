@@ -129,14 +129,14 @@ function LayoutContent() {
                             variant="filled" 
                             size="large"
                             color="primary"
-                            >Dang Ky
+                            >Register
                             </Button>
 
                             <Button 
                             variant="filled" 
                             size="large"
                             color="primary"
-                            >Dang Nhap
+                            >Login
                             </Button>
                         <div>
                             <IconButton

@@ -6,7 +6,7 @@ import Playlist from './Components/Playlist/Playlist';
 import Layout from './Components/Layout/Layout';
 import Home from './Components/Home/Home';
 import Search from './Components/Search/Search';
-import Library from './Components/Library/Library';
+import Library from './Components/Songs/Library/Library';
 import Personal from './Components/Personal/Personal';
 import Album from './Components/Album/Album';
 import Login from "./pages/login";
@@ -15,7 +15,6 @@ import Register from "./pages/register";
 
 function App() {
 
-    // const auth = useSelector(state => state.auth)
 
   
 
@@ -24,8 +23,8 @@ function App() {
       <Routes>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-        <Route path='' element={<Layout/>}>
-          <Route path='/home' element={<Home/>}/>
+        <Route path='/' element={<Layout/>}>
+            <Route path='/home' element={<Home/>}></Route>
           <Route path='/search' element={<Search/>}/>
           <Route path='/library' element={<Library/>}/>
           <Route path='/personal' element={<Personal/>}/>

@@ -9,21 +9,20 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems } from './listItem';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Copyright from "./Copyright";
-import {Link, Outlet} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { Link, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SecondaryListItems from "./SecondaryListItems";
-import {Menu, MenuItem} from "@mui/material";
-import {AccountCircle} from "@mui/icons-material";
-import PlayBar from '../playbar';
+import { Menu, MenuItem } from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
+import PlayBar from '../PlayBar';
+
 
 
 const drawerWidth = 240;
@@ -78,9 +77,13 @@ function LayoutContent() {
     const [open, setOpen] = useState(true);
     const auth = useSelector(state => state.auth)
     const [anchorEl, setAnchorEl] = React.useState(null);
+
+
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const [user, setUser] = useState(null)
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -90,9 +93,11 @@ function LayoutContent() {
     };
 
     useEffect(() => {
-        console.log(auth)
+        let u = localStorage.getItem('user')
+        if (u){
+            setUser(JSON.parse(u))
+        }
     }, []);
-
 
     return (
         <ThemeProvider theme={mdTheme}>
@@ -117,28 +122,39 @@ function LayoutContent() {
                             <MenuIcon />
                         </IconButton>
 
-                            <Typography
-                                component="h1"
-                                variant="h6"
-                                color="inherit"
-                                noWrap
-                                sx={{ flexGrow: 1 }}
-                            >
-                            </Typography>
+                        <Typography
+                            component="h1"
+                            variant="h6"
+                            color="inherit"
+                            noWrap
+                            sx={{ flexGrow: 1 }}
+                        >
+                        </Typography>
+                        {/*{!props.username?*/}
 
-                            <Button 
-                            variant="filled" 
-                            size="large"
-                            color="primary"
-                            >Dang Ky
-                            </Button>
+                        {
+                            user ? <div style={{width:'100px !important' , color:'white'}}>{user?.username ?? "1231232"}</div> : <>
+                                <Button
+                                    variant="filled"
+                                    size="large"
+                                    color="primary"
+                                >
+                                    <Link to = "/register">Register</Link>
 
-                            <Button 
-                            variant="filled" 
-                            size="large"
-                            color="primary"
-                            >Dang Nhap
-                            </Button>
+                                </Button>
+
+                                <Button
+                                    variant="filled"
+                                    size="large"
+                                    color="primary"
+                                >
+                                    <Link to = "/register">Login</Link>
+                                </Button>
+                            </>
+                        }
+
+
+
                         <div>
                             <IconButton
                                 size="large"
@@ -169,6 +185,9 @@ function LayoutContent() {
                                 <MenuItem onClick={handleClose}>My account</MenuItem>
                             </Menu>
                         </div>
+
+
+
                     </Toolbar>
                 </AppBar>
                 <Drawer variant="permanent" open={open} >
@@ -180,7 +199,7 @@ function LayoutContent() {
                             justifyContent: 'flex-end',
                             px: [1],
                         }}
-                        
+
                     >
                         <IconButton onClick={toggleDrawer} style={{ color: '#FFFFFF' }}>
                             <ChevronLeftIcon />
@@ -189,7 +208,7 @@ function LayoutContent() {
                     <Divider />
                     <List component="nav">
                         {mainListItems}
-                        <Divider sx={{ my: 1 }}  />
+                        <Divider sx={{ my: 1 }} />
                         <SecondaryListItems />
                     </List>
                 </Drawer>
@@ -207,7 +226,7 @@ function LayoutContent() {
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Outlet/>
+                        <Outlet />
                         <Copyright sx={{ pt: 4 }} />
                     </Container>
                 </Box>
@@ -219,8 +238,8 @@ function LayoutContent() {
 export default function Layout() {
     return (
         <>
-        <LayoutContent />;
-        <PlayBar/>
+            <LayoutContent />;
+            <PlayBar />
         </>
     )
 

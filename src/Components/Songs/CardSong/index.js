@@ -1,9 +1,13 @@
 import { Card, CardActionArea, CardMedia, Grid } from "@mui/material";
+
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import customAxios from "../../../service/api";
 import { useEffect, useState } from "react";
+
+import { useDispatch } from "react-redux";
+import { updateTopVnSongs } from "../../../redux/songRedux";
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -15,12 +19,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function CardSong() {
+
+    let dispatch = useDispatch()
+
     const [songs, setSongs] = useState([])
 
     useEffect(() => {
         const init = async () => {
             try {
                 const res = await customAxios.get('/songs')
+                dispatch(updateTopVnSongs(res.data))
                 setSongs(res.data)
             } catch (err) {
                 console.log(err)
@@ -32,11 +40,7 @@ export default function CardSong() {
 
     return (
         <>
-            <div>
-                <audio controls autoplay>
-                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/ogg" />
-                </audio>
-            </div>
+
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
@@ -44,22 +48,23 @@ export default function CardSong() {
                     </Grid>
 
                     {
-                        songs.length ? songs.map((song) => (
+                        songs.length ? songs.map((song, index) => (
 
-                            <Grid item xs={3}>
-                                <Item>
-                                    <Card sx={{ maxWidth: 345 }}>
-                                        <CardActionArea>
-                                            <CardMedia
-                                                component="img"
-                                                height="140"
-                                                image={song?.image ?? ""}
-                                                alt="song img"
-                                            />
-                                        </CardActionArea>
-                                    </Card>
-                                </Item>
-                            </Grid>
+                                <Grid item xs={3} key={index}>
+                                    <Item>
+                                        <Card sx={{ maxWidth: 345 }}>
+                                            <CardActionArea>
+                                                <CardMedia
+                                                    component="img"
+                                                    height="140"
+                                                    image={song?.image ?? ""}
+                                                    alt="song img"
+                                                />
+                                            </CardActionArea>
+                                        </Card>
+                                    </Item>
+                                </Grid>
+
                         ))
 
                             : null

@@ -1,40 +1,16 @@
 
 import { useRef, useState } from 'react'
 import './playbar.css'
+import { useSelector } from 'react-redux';
 
 const PlayBar = () => {
-    const [isPlaying, setIsPlaying] = useState(false);
     const [currentSongIndex, setCurrentSongIndex] = useState(0);
     const audioRef = useRef(null);
+
+    const topVnSongs = useSelector(state => state.song.topVnSongs)
   
-    const [songs, setSongs] = useState([
-        {
-          title: 'Song 1',
-          file: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
-        },
-        {
-          title: 'Song 2',
-          file: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
-
-        },
-        {
-          title: 'Song 3',
-          file: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
-        }
-      ]);
-
-
-    // const handlePlayback = () => {
-    //   if (isPlaying) {
-    //     audioRef.current.pause();
-    //   } else {
-    //     audioRef.current.play();
-    //   }
-    //   setIsPlaying(!isPlaying);
-    // };
-
     const handleNextSong = () => {
-        if (currentSongIndex === songs.length - 1) {
+        if (currentSongIndex === topVnSongs.length - 1) {
           setCurrentSongIndex(0);
           if(audioRef.current){
             audioRef.current.pause();
@@ -51,22 +27,43 @@ const PlayBar = () => {
         }
         }
       };
+    const handlePreviousSong = () => {
+        if (currentSongIndex === 0) {
+            setCurrentSongIndex(topVnSongs.length-1);
+            if(audioRef.current){
+                audioRef.current.pause();
+                audioRef.current.load();
+                  audioRef.current.play();
+            }
 
-    console.log(audioRef.current,'audioRef')
-    console.log(audioRef.current,'audioRef')
+        } else {
+            setCurrentSongIndex(currentSongIndex - 1);
+            if(audioRef.current){
+                audioRef.current.pause();
+                audioRef.current.load();
+                audioRef.current.play();
+            }
+        }
+    };
+
+
     return (
-        <>
+        <>  
             <div className="playbar-container">
-            <h1>{songs[currentSongIndex].title}</h1>
+            <h1>{topVnSongs[currentSongIndex]?.nameSong}</h1>
+                <button onClick={handlePreviousSong}><i className="fa-duotone fa-forward"></i></button>
                 <div>
-                    <audio controls autoplay ref={audioRef}>
-                        <source 
-                        src={songs[currentSongIndex].file}
-                         type="audio/ogg" />
-                    </audio>
+                  {
+                    topVnSongs.length &&   <audio controls autoPlay ref={audioRef}>
+                    <source
+                    src={topVnSongs[currentSongIndex]?.sound}
+                     type="audio/ogg" />
+                </audio>
+                  }
+                  
                 </div>
-            {/* <button onClick={handlePlayback}>{isPlaying ? 'Pause' : 'Play'}12312313123</button> */}
-            <button onClick={handleNextSong}>Next songs</button>
+
+            <button onClick={handleNextSong}><i className="fa-duotone fa-forward"></i></button>
             </div>
         </>
     )

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+
 
 import "./login.css";
 import SearchIcon from "../../assets/icons/SearchIcon";
@@ -13,7 +15,6 @@ const INIT_ERROR_MESSAGE = {
 const instance = axios.create({
   baseURL: process.env.REACT_APP_REACT_BASE_API,
   headers: {
-    // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
     ContentType: "application/json",
     Accept: "application/json",
     CacheControl: "no-cache"
@@ -27,6 +28,7 @@ const Login = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const navigate = useNavigate()
+  const dispatch = useDispatch();
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -48,17 +50,26 @@ const Login = () => {
       return setErr({ ...err, pwd: "This field is required" });
     }
 
-    // try {
-    //   const res = await instance.post("/users/login", {
-    //     name: name,
-    //     password: pwd,
-    //   });
-    //   console.log(res)
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const res = await instance.post("/users/login", {
+        name: name,
+        password: pwd,
+      });
 
-    navigate('/home')
+      let token = res.data.token;
+      if (res.status === 200) {
+        localStorage.setItem('access_token', token);
+        localStorage.setItem('user', JSON.stringify(res.data));
+        navigate('/home')
+      } else {
+        navigate('')
+      }
+    } catch (err) {
+
+      console.log(err, "Error");
+    }
+
+
   };
 
   return (
@@ -92,7 +103,7 @@ const Login = () => {
         {err.pwd ? (
           <p style={{ fontSize: "12px", color: "red" }}>{err.pwd}</p>
         ) : null}
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
         <Link to="/register">
             Dont have account yet? Go to register
         </Link>

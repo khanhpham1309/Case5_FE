@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import PlayBar from '../playbar';
+
 
 export default function Dashboard() {
 
@@ -41,7 +41,7 @@ export default function Dashboard() {
                     </Paper>
                 </Grid>
             </Grid>
-            <PlayBar />
+
         </>
     );
 }

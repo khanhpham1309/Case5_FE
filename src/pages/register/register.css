@@ -1,0 +1,68 @@
+.login-container {
+    
+}
+
+.login-container h1 {
+    text-align: center;
+}
+
+.login-container form {
+    width: 600px;
+
+    border-radius: 8px;
+    padding: 36px 24px;
+    margin: auto;
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.login-container form a {
+    align-self: flex-end;
+}
+
+.login-container form .pwd  {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container form .pwd .icon  {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 15%;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.login-container form input   {
+    width: 80%;
+    outline: 0;
+    border-radius: 8px;
+    padding: 10px;
+    height: 36px;
+    border: 1px solid gray;
+}
+
+.login-container form button {
+   width: 240px;
+   margin: auto;
+   padding: 12px 24px;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   background-color: black;
+   color: white;
+
+}
+
+.login-container form button:hover {
+    color: black;
+    background: #ECD15D;
+ }

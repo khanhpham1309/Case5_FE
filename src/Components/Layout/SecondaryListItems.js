@@ -28,7 +28,7 @@ function SecondaryListItems() {
         >
           <ListItemButton>
             <ListItemIcon>
-              <i className="fa-solid fa-music"></i>
+              <i class="fa-solid fa-music"></i>
             </ListItemIcon>
             <ListItemText primary="Playlist" />
           </ListItemButton>
@@ -43,7 +43,7 @@ function SecondaryListItems() {
         >
           <ListItemButton>
             <ListItemIcon>
-              <i className="fa-solid fa-user"></i>
+              <i class="fa-solid fa-user"></i>
             </ListItemIcon>
             <ListItemText primary="Personal" />
           </ListItemButton>
@@ -58,7 +58,7 @@ function SecondaryListItems() {
         >
           <ListItemButton>
             <ListItemIcon>
-              <i className="fa-solid fa-books"></i>
+              <i class="fa-solid fa-books"></i>
             </ListItemIcon>
             <ListItemText primary="Album" />
           </ListItemButton>

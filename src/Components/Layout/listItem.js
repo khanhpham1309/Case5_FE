@@ -18,7 +18,7 @@ export const mainListItems = (
     >
       <ListItemButton>
         <ListItemIcon>
-          <i className="fa-solid fa-house"></i>
+          <i class="fa-solid fa-house"></i>
         </ListItemIcon>
         <ListItemText primary="Home" />
       </ListItemButton>
@@ -42,7 +42,7 @@ export const mainListItems = (
     >
       <ListItemButton>
         <ListItemIcon>
-          <i className="fa-solid fa-list-music"></i>
+          <i class="fa-solid fa-list-music"></i>
         </ListItemIcon>
         <ListItemText primary="Library" />
       </ListItemButton>

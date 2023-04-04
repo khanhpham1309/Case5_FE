@@ -2,7 +2,6 @@ import {createSlice} from "@reduxjs/toolkit";
 import {login, register} from "../../services/userService";
 
 
-
 const initialState = {
     currentUser:JSON.parse(localStorage.getItem('user')),
     users:[]

@@ -1,12 +1,12 @@
-.login-container {
+.Register-container {
     
 }
 
-.login-container h1 {
+.Register-container h1 {
     text-align: center;
 }
 
-.login-container form {
+.Register-container form {
     width: 600px;
 
     border-radius: 8px;
@@ -19,11 +19,11 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.login-container form a {
+.Register-container form a {
     align-self: flex-end;
 }
 
-.login-container form .pwd  {
+.Register-container form .pwd  {
     position: relative;
     width: 100%;
     display: flex;
@@ -31,7 +31,7 @@
     align-items: center;
 }
 
-.login-container form .pwd .icon  {
+.Register-container form .pwd .icon  {
     width: 25px;
     height: 25px;
     position: absolute;
@@ -41,7 +41,7 @@
     cursor: pointer;
 }
 
-.login-container form input   {
+.Register-container form input   {
     width: 80%;
     outline: 0;
     border-radius: 8px;
@@ -50,7 +50,7 @@
     border: 1px solid gray;
 }
 
-.login-container form button {
+.Register-container form button {
    width: 240px;
    margin: auto;
    padding: 12px 24px;
@@ -62,7 +62,7 @@
 
 }
 
-.login-container form button:hover {
+.Register-container form button:hover {
     color: black;
     background: #ECD15D;
  }

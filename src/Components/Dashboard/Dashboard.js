@@ -1,7 +1,6 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import PlayBar from "../PlayBar";
 
 export default function Dashboard() {
   return (
@@ -36,7 +35,6 @@ export default function Dashboard() {
           ></Paper>
         </Grid>
       </Grid>
-      <PlayBar />
     </>
   );
 }

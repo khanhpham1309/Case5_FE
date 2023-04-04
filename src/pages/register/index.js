@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+
 
 import "./register.css";
 import SearchIcon from "../../assets/icons/SearchIcon";
@@ -14,6 +14,7 @@ const INIT_ERROR_MESSAGE = {
 const Register = () => {
   const [name, setName] = useState("");
   const [pwd, setPwd] = useState("");
+
   const [err, setErr] = useState(INIT_ERROR_MESSAGE);
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -29,35 +30,33 @@ const Register = () => {
     setErr({ ...err, pwd: "" });
   };
 
+
   const onHandleSubmit = async (e) => {
     e.preventDefault();
 
     if (name === "") {
-      return setErr({ ...err, name: "This field is required" });
+      return setErr({ ...err, name: "Nhập tên đăng ký" });
     }
     if (pwd === "") {
-      return setErr({ ...err, pwd: "This field is required" });
+      return setErr({ ...err, pwd: "Nhập mật khẩu đăng ký"});
     }
 
     try {
-      const res = await customAxios.post("/users/register", {
+      await customAxios.post("/users/register", {
         username: name,
-        password: pwd,
-        avatar: 'test',
-        nameUser: 'thang'
+        password: pwd
       });
-      console.log(res)
+      navigate('/login')
+
     } catch (err) {
       console.log(err);
     }
 
-    // customAxios
-
-    // navigate('/login')
   };
 
   return (
-    <div className="login-container">
+
+    <div className="Register-container">
       <h1>Register</h1>
       <form onSubmit={onHandleSubmit}>
         <div className="pwd">
@@ -87,7 +86,7 @@ const Register = () => {
         {err.pwd ? (
           <p style={{ fontSize: "12px", color: "red" }}>{err.pwd}</p>
         ) : null}
-        <button type="submit">Submit</button>
+        <button type="submit">Register</button>
         <Link to="/login">
             Already have an account ? Go to login
         </Link>

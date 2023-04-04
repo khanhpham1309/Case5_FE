@@ -4,13 +4,18 @@ import {addSong, getSongs} from "../../service/songService";
 
 const initialState = {
     songs: [],
-    song: {}
+    song: {},
+    topVnSongs : []
 }
 const songSlice = createSlice({
     name: 'songs',
     loading: true,
     initialState,
-    reducers: {},
+    reducers: {
+        updateTopVnSongs: (state , action) => {
+          state.topVnSongs = action.payload
+        },
+    },
     extraReducers: builder => {
         builder.addCase(getSongs.fulfilled,(state,action)=>{
             state.songs = action.payload
@@ -18,9 +23,12 @@ const songSlice = createSlice({
         });
         builder.addCase(addSong.fulfilled,(state,action)=>{
             state.songs.push(action.payload)
-
+            console.log(state)
         });
     }
 
 })
+
+export const { updateTopVnSongs } = songSlice.actions
+
 export default songSlice.reducer;

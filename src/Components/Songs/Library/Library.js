@@ -1,17 +1,12 @@
 import {useEffect, useRef, useState} from "react";
-import { useSelector } from 'react-redux';
-import customAxios from "../../service/api";
+import customAxios from "../../../service/api";
 import * as PropTypes from "prop-types";
 import {Button, Table} from "react-bootstrap";
-import AddSong from "../Songs/addSong/AddSong";
-
-
-
+import AddSong from "../addSong/AddSong";
 
 function StyledTableCell(props) {
     return null;
 }
-
 StyledTableCell.propTypes = {children: PropTypes.node};
 
 function StyledTableRow() {
@@ -21,20 +16,23 @@ function StyledTableRow() {
 StyledTableRow.propTypes = {children: PropTypes.node};
 export default function Library() {
     const audioRef = useRef(null);
-    const [songs, setSongs] = useState([])
+    const [songs, setSongs] = useState([]);
+
 
     useEffect(() => {
+        let userz = localStorage.getItem("user") || null;
+        let id = JSON.parse(userz)?.idUser || null
         const init = async () => {
             try {
-                const res = await customAxios.get("/songs")
-
+                const res = await customAxios.get(`/users/${id}`)
                 setSongs(res.data)
             } catch (err) {
                 console.log(err)
             }
         }
-        init()
+        id && init()
     }, [])
+    console.log(songs)
 
     return (
         <>
@@ -45,24 +43,27 @@ export default function Library() {
                     <th>Name</th>
                     <th>Category</th>
                     <th>Source</th>
+
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {
                     songs?.length ? songs.map((song, index) => (
-                    <tr>
+                    <tr key={song.idSong}>
                         <td>{index + 1}</td>
                         <td>{song.nameSong}</td>
                         <td>{song.nameCategory}</td>
+
                         <td>
-                            <audio controls autoPlay ref={audioRef}>
+                            <audio controls autoPlay>
                                 <source
-                                    src={songs.source}
+                                    src={song.sound}
                                     type="audio/ogg"/>
                             </audio>
 
                         </td>
+
                         <td>
                             <Button variant="outline-danger">Xóa</Button>
                             <Button variant="outline-info">Sửa</Button>

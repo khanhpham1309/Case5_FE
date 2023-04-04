@@ -12,8 +12,10 @@ function SecondaryListItems() {
   const navigate = useNavigate();
 
   const submitLogOut = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
     dispatch(logout());
+    navigate("/login");
   };
 
   return (

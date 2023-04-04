@@ -5,7 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import {useDispatch} from "react-redux";
 import {logout} from "../../redux/features/auth/authSlice";
-import {useNavigate, Link, NavLink} from "react-router-dom";
+import {useNavigate, NavLink} from "react-router-dom";
 
 function SecondaryListItems() {
     const dispatch = useDispatch();
@@ -29,7 +29,7 @@ function SecondaryListItems() {
         >
             <ListItemButton>
                     <ListItemIcon>
-                    <i class="fa-solid fa-music"></i>
+                    <i className="fa-solid fa-music"></i>
                     </ListItemIcon>
                     <ListItemText primary="Playlist" />
                 </ListItemButton>
@@ -44,7 +44,7 @@ function SecondaryListItems() {
         >
             <ListItemButton>
                     <ListItemIcon>
-                    <i class="fa-solid fa-user"></i>
+                    <i className="fa-solid fa-user"></i>
                     </ListItemIcon>
                     <ListItemText primary="Personal" />
                 </ListItemButton>
@@ -59,7 +59,7 @@ function SecondaryListItems() {
         >
             <ListItemButton>
                     <ListItemIcon>
-                    <i class="fa-solid fa-books"></i>
+                    <i className="fa-solid fa-books"></i>
                     </ListItemIcon>
                     <ListItemText primary="Album" />
                 </ListItemButton>
